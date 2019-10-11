@@ -430,12 +430,18 @@ static int p_host(struct hostent *ent)
 static void get_host_by_name(char *content, uint32_t size)
 {
 	struct hostent *ent;
-	char hostname[RECV_BUFFER_SIZE];
+	char *hostname = (char *)os_alloc(RECV_BUFFER_SIZE);
 	int ret;
 	int fn;
 	int catched;
 
 	//udp_log_hexdump("content", (const char *)content, size);
+	
+	if(hostname == NULL) {
+		return;
+	}
+
+	hostname[0] = 0;
 
 	ret = sscanf(content, "%d %s%n", &fn, hostname, &catched);
 
@@ -446,6 +452,8 @@ static void get_host_by_name(char *content, uint32_t size)
 	} else {
 		udp_log_printf("no hostname!\n");
 	}
+
+	os_free(hostname);
 }
 
 static void fn4(request_t *request)

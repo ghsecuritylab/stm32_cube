@@ -122,7 +122,7 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  osThreadDef(probe_tool, task_probe_tool, osPriorityNormal, 0, 128);
+  osThreadDef(probe_tool, task_probe_tool, osPriorityNormal, 0, 128 * 4);
   osThreadCreate(osThread(probe_tool), NULL);
   /* USER CODE END RTOS_THREADS */
 
