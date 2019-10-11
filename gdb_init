@@ -1,0 +1,43 @@
+file build/cube.elf
+target remote :2331
+set pagination off
+set print pretty on
+
+define parse_sp
+	set $armex_base = $arg0
+
+	printf "xPSR            0x%x\n", *($armex_base+28)
+	printf "ReturnAddress   0x%x\n", *($armex_base+24)
+	printf "LR (R14)        0x%x\n", *($armex_base+20)
+	printf "R12             0x%x\n", *($armex_base+16)
+	printf "R3              0x%x\n", *($armex_base+12)
+	printf "R2              0x%x\n", *($armex_base+8)
+	printf "R1              0x%x\n", *($armex_base+4)
+	printf "R0              0x%x\n", *($armex_base)
+	printf "Return instruction:\n"
+	x/i *($armex_base+24)
+	printf "LR instruction:\n"
+	x/i *($armex_base+20)
+end
+
+define checksp
+	printf "next return ",
+	if (($lr & 0x4) == 0x4)
+		printf "uses msp 0x%x.\n", $msp
+	else
+		printf "uses psp 0x%x.\n", $psp
+	end
+	info registers sp msp psp
+	printf "main stack:[0x%x - 0x%x, %d]\n", &Stack_Mem, &__initial_sp, (char *)&__initial_sp - (char *)&Stack_Mem
+end
+
+#define hook-stop
+#	checksp
+#end
+	
+b HardFault_Handler
+b BusFault_Handler
+b UsageFault_Handler
+b main
+monitor reset
+#continue
