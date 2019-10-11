@@ -36,6 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+apps/task_probe_tool.c \
 Src/main.c \
 Src/fatfs.c \
 Src/freertos.c \
@@ -216,6 +217,7 @@ AS_INCLUDES =  \
 
 # C includes
 C_INCLUDES =  \
+-Iapps \
 -IInc \
 -IMiddlewares/Third_Party/LwIP/src/include \
 -IMiddlewares/Third_Party/LwIP/system \
