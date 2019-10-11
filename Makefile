@@ -36,6 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+apps/app.c \
 apps/task_probe_tool.c \
 apps/test_pwm.c \
 Src/main.c \

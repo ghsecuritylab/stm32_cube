@@ -27,8 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "task_probe_tool.h"
-#include "test_pwm.h"
+#include "app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -126,10 +125,8 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  osThreadDef(probe_tool, task_probe_tool, osPriorityNormal, 0, 128 * 4);
-  osThreadCreate(osThread(probe_tool), NULL);
-  osThreadDef(test_pwm, test_pwm, osPriorityNormal, 0, 128);
-  osThreadCreate(osThread(test_pwm), NULL);
+  osThreadDef(app, app, osPriorityNormal, 0, 128);
+  osThreadCreate(osThread(app), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
