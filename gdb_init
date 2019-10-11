@@ -40,4 +40,4 @@ b BusFault_Handler
 b UsageFault_Handler
 b main
 monitor reset
-#continue
+continue
