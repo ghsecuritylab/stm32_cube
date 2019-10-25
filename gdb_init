@@ -39,5 +39,17 @@ b HardFault_Handler
 b BusFault_Handler
 b UsageFault_Handler
 b main
+b Src/ethernetif.c:665
+	commands
+		printf "link is up!\n"
+		p/x *netif
+		c
+	end
+b Src/ethernetif.c:733
+	commands
+		printf "link is down!\n"
+		p/x *netif
+		c
+	end
 monitor reset
 continue
